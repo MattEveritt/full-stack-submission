@@ -34,7 +34,7 @@ const App = () => {
  }
 
  const handleDeletePerson = (event) => {
-    const id = parseInt(event.target.value)
+    const id = event.target.value
     const [person] = persons.filter(p => p.id === id)
     if (window.confirm(`Delete ${person.name} ? `)) {
         personService.deletePerson(id)
@@ -44,35 +44,36 @@ const App = () => {
 
  const addPerson = (event) => {
   event.preventDefault()
-  const person =
-  persons.find(person => person.name === newName) || ''
-  if (person.name === newName) {
-      const message = `${newName} is already added to phonebook, replace the old number with a new one?`
-   if (window.confirm(message)) {
-        const personObject = { 
-            name: newName, 
-            number: newNumber
-        }
-        personService.update(person.id, personObject)
-            .then( returnedPerson => {
-                setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
-                setSuccessMessage(
-                    `${newName}'s number was changed`
-                  )
-                  setTimeout(() => {
-                    setSuccessMessage(null)
-                  }, 5000)
-            }).catch(error => {
-                setFailureMessage(
-                    `Information of ${personObject.name} has already been removed from the server`
-                )
-                setPersons(persons.filter(p => p.name !== personObject.name))
-                setTimeout(() => {
-                    setFailureMessage(null)
-                  }, 5000)
-            })
-   }
-  } else {
+//   const person =
+//   persons.find(person => person.name === newName) || ''
+//   console.log(person)
+//   if (person.name === newName) {
+//       const message = `${newName} is already added to phonebook, replace the old number with a new one?`
+//    if (window.confirm(message)) {
+//         const personObject = { 
+//             name: newName, 
+//             number: newNumber
+//         }
+//         personService.update(person.id, personObject)
+//             .then( returnedPerson => {
+//                 setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+//                 setSuccessMessage(
+//                     `${newName}'s number was changed`
+//                   )
+//                   setTimeout(() => {
+//                     setSuccessMessage(null)
+//                   }, 5000)
+//             }).catch(error => {
+//                 setFailureMessage(
+//                     `Information of ${personObject.name} has already been removed from the server`
+//                 )
+//                 setPersons(persons.filter(p => p.name !== personObject.name))
+//                 setTimeout(() => {
+//                     setFailureMessage(null)
+//                   }, 5000)
+//             })
+//    }
+//   } else {
    const personObject = {
     name: newName,
     number: newNumber,
@@ -87,8 +88,17 @@ const App = () => {
             setSuccessMessage(null)
           }, 5000)
     })
+    .catch(error => {
+        setFailureMessage(
+            error.response.data.error
+        )
+        setTimeout(() => {
+            setFailureMessage(null)
+        }, 5000)
 
-  }
+    })
+
+  
   setNewName('')
   setNewNumber('')
  }
