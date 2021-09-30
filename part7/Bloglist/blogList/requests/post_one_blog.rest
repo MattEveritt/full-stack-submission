@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1hdHR5RXYiLCJpZCI6IjYxMzFiZGZlNGMzMTRhYjU0NTM3NDhlZSIsImlhdCI6MTYzMDY1NDM2Nn0.y2FrUCwX0FpRIVCZK7EWzVKyqSyW1_clS7DBmJyRuzk
+
+{
+    "title": "Dude",
+    "author": "Matthias",
+    "url": "hey"
+}
